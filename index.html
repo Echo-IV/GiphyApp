@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Giphy App</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div>
+    <header>
+      <h1>Giphy App</h1>
+      <form id="searchBar" class="searchBar">
+        <div class="searchIcon" id="searchIcon"><button class="fa fa-search btnSearch"></span></div>
+        <input name="q" type="text" class="search" id="search" value="" onkeydown="app.render.showClearInput(this.value)"  />
+        <span id="searchIconClean" class="fa fa-times"></span>
+        <div class="loader"></div>
+      </form>
+      <ul>
+        <li><a href="favorited.html">Favoris</a></li>
+      </ul>
+
+    </header>
+
+    <main>
+      <div class="response" id="response">
+        <div class="loader" id="loader"></div>
+      </div>
+      <div id="result">
+
+      </div>
+    </main>
+
+    <footer>
+      <div id="numberItems"></div>
+    </footer>
+
+    <script>
+      window.app = {};
+    </script>
+
+    <script src="assets/js/favorited.js"></script>
+    <script src="assets/js/render.js"></script>
+    <script>
+      app.render.handleSubmit();
+    </script>
+
+  </div>
+</body>
+
+</html>

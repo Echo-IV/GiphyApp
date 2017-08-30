@@ -1,0 +1,172 @@
+@import "compass/reset";
+$background: #2c3942;
+$header: #ff4747;
+
+body {
+  background-color: $background;
+  font-family: 'Roboto', sans-serif;
+}
+
+header {
+  display: grid;
+  height: 100px;
+  background-color: $header;
+  grid-template-columns: repeat(3, 1fr);
+
+  h1 {
+    font-size: 35px;
+    display: flex;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    grid-column: 1;
+  }
+
+  #searchBar {
+    display: flex;
+    align-items: center;
+    grid-column: 2;
+
+    #search {
+      font-size: 35px;
+      color: $header;
+      width: 500px;
+      height: 30px;
+    }
+
+    #searchIcon {
+      margin-right: 2px;
+    }
+
+    #searchIconClean {
+      visibility: hidden;
+      margin-left: -20px;
+    }
+  }
+
+  a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+
+    &:hover {
+      border-bottom: #fff 1px solid;
+    }
+  }
+
+  ul {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    grid-column: 3;
+
+    li {
+      font-size: 25px;
+    }
+  }
+}
+
+main {
+  #response {
+    display: flex;
+    justify-content: center;
+  }
+
+  #loader {
+    visibility: hidden;
+    margin-top: 10px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 40px;
+    height: 40px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+footer {
+  #items {
+    margin-top: 20px;
+    color: #fff;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+}
+
+#favorited,
+#result {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.gif {
+  margin: 10px;
+  width: 25%;
+  box-sizing: border-box;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  img {
+    width: 100%;
+  }
+}
+
+.favoritedBtn {
+  border: none;
+  background-color: transparent;
+}
+
+.show {
+  display: block;
+}
+
+.btnSearch {
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+}
+
+.fa-search,
+.fa-star {
+  color: $header;
+}
+
+.fa-star {
+  visibility: hidden;
+  margin-top: 10px;
+  position: absolute;
+  cursor: pointer;
+  width: 5px;
+  height: 5px;
+  top: 0;
+  right: 0;
+  padding-right: 15px;
+}
+
+.selected {
+  color: #000;
+}
+
+
+#numberItems {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #fff;
+  justify-content: center;
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mes Favoris</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div>
+    <header>
+      <h1>Giphy App</h1>
+
+      <ul>
+        <li><a href="index.html">Rechercher un gif</a></li>
+      </ul>
+
+    </header>
+
+    <div id="favorited"></div>
+
+  </div>
+
+  <script>
+    window.app = {};
+  </script>
+  <script src="assets/js/favorited.js"></script>
+  <script>
+    app.favorited.initPage();
+  </script>
+
+</body>
+
+</html>
