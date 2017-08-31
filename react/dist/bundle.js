@@ -22421,6 +22421,10 @@ var _RenderGif = __webpack_require__(186);
 
 var _RenderGif2 = _interopRequireDefault(_RenderGif);
 
+var _gifService = __webpack_require__(187);
+
+var _gifService2 = _interopRequireDefault(_gifService);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22432,15 +22436,63 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var App = function (_Component) {
   _inherits(App, _Component);
 
-  function App() {
+  function App(props) {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+    _this.state = {
+      query: '',
+      gifs: [],
+      visibleLoader: false
+    };
+    return _this;
   }
 
   _createClass(App, [{
+    key: 'handleShowClearInput',
+    value: function handleShowClearInput(e) {
+      //console.log(e);
+    }
+  }, {
+    key: 'toggleLoader',
+    value: function toggleLoader() {
+      this.setState({ visibleLoader: !this.state.visibleLoader });
+    }
+  }, {
+    key: 'RenderGif',
+    value: function RenderGif() {
+      var _this2 = this;
+
+      var apiKey = "af93130f2dd3408cbbd9729b0ce176f0";
+
+      _gifService2.default.getGif(apiKey, this.state.query).then(function (response) {
+        return response.json();
+      }).then(function (responseJson) {
+        _this2.setState({ gifs: responseJson.data });
+      }).catch(function (error) {
+        console.log(error);
+      }).then(function () {
+        _this2.toggleLoader();
+      });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+
+      event.preventDefault();
+      this.RenderGif();
+    }
+  }, {
+    key: 'handleChange',
+    value: function handleChange(event) {
+      this.setState({ query: event.target.value });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       return _react2.default.createElement(
         'div',
         null,
@@ -22454,19 +22506,33 @@ var App = function (_Component) {
           ),
           _react2.default.createElement(
             'form',
-            null,
+            { onSubmit: function onSubmit(e) {
+                return _this3.handleSubmit(e);
+              } },
             _react2.default.createElement(
               'div',
-              null,
-              _react2.default.createElement('button', null),
-              _react2.default.createElement('input', null),
-              _react2.default.createElement('span', null)
-            )
+              { className: 'searchIcon' },
+              _react2.default.createElement('button', { className: 'fa fa-search' })
+            ),
+            _react2.default.createElement('input', { name: 'q', type: 'text', onChange: function onChange(e) {
+                return _this3.handleChange(e);
+              }, value: this.state.query, onKeyPress: function onKeyPress(e) {
+                return _this3.handleShowClearInput(e);
+              } }),
+            _react2.default.createElement('span', null)
           ),
           _react2.default.createElement(
             'ul',
             null,
-            _react2.default.createElement('a', null)
+            _react2.default.createElement(
+              'li',
+              null,
+              _react2.default.createElement(
+                'a',
+                { href: '#' },
+                'Favoris'
+              )
+            )
           )
         ),
         _react2.default.createElement(
@@ -22480,7 +22546,7 @@ var App = function (_Component) {
           _react2.default.createElement(
             'div',
             null,
-            _react2.default.createElement(_RenderGif2.default, null)
+            _react2.default.createElement(_RenderGif2.default, { gifs: this.state.gifs })
           )
         ),
         _react2.default.createElement(
@@ -22514,10 +22580,6 @@ var _react = __webpack_require__(32);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _gifService = __webpack_require__(187);
-
-var _gifService2 = _interopRequireDefault(_gifService);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22532,64 +22594,35 @@ var RenderGif = function (_Component) {
   function RenderGif(props) {
     _classCallCheck(this, RenderGif);
 
-    var _this = _possibleConstructorReturn(this, (RenderGif.__proto__ || Object.getPrototypeOf(RenderGif)).call(this, props));
-
-    _this.state = {
-      visibleLoader: false,
-      gifs: []
-    };
-    return _this;
+    return _possibleConstructorReturn(this, (RenderGif.__proto__ || Object.getPrototypeOf(RenderGif)).call(this, props));
   }
 
   _createClass(RenderGif, [{
-    key: 'toggleLoader',
-    value: function toggleLoader() {
-      this.setState({ visibleLoader: !this.state.visibleLoader });
-    }
-  }, {
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      var _this2 = this;
-
-      var apiKey = "af93130f2dd3408cbbd9729b0ce176f0";
-      var query = "cat";
-
-      _gifService2.default.getGif(apiKey, query).then(function (response) {
-        return response.json();
-      }).then(function (responseJson) {
-        _this2.setState({ gifs: responseJson.data });
-      }).catch(function (error) {
-        console.log(error);
-      }).then(function () {
-        _this2.toggleLoader();
-      });
-    }
-  }, {
-    key: 'render',
+    key: "render",
     value: function render() {
-
-      var gifs = this.state.gifs.map(function (gif, i) {
+      var gifs = this.props.gifs.map(function (gif) {
         return _react2.default.createElement(
-          'div',
+          "div",
           { key: gif.id },
-          _react2.default.createElement('img', { src: gif.images.downsized.url, alt: gif.slug, width: '200', height: '200' })
+          _react2.default.createElement("img", { src: gif.images.downsized.url, alt: gif.slug, width: "200", height: "200" }),
+          _react2.default.createElement("span", { className: "fa fa-star" })
         );
       });
 
       return _react2.default.createElement(
-        'div',
+        "div",
         null,
         _react2.default.createElement(
-          'div',
-          { className: 'result' },
+          "div",
+          { className: "result" },
           gifs
         ),
         _react2.default.createElement(
-          'p',
-          { className: 'numberItems' },
-          'Il y a ',
-          this.state.gifs.length,
-          ' \xE9l\xE9ments'
+          "p",
+          { className: "numberItems" },
+          "Il y a ",
+          this.props.gifs.length,
+          " \xE9l\xE9ments"
         )
       );
     }

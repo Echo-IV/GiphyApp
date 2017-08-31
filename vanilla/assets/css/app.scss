@@ -19,13 +19,11 @@ header {
     color: #fff;
     align-items: center;
     justify-content: center;
-
   }
 
   #searchBar {
     display: flex;
     align-items: center;
-
 
     #search {
       font-size: 35px;
@@ -45,7 +43,6 @@ header {
   }
 
   a {
-
     text-decoration: none;
     color: #fff;
 
@@ -58,7 +55,6 @@ header {
     justify-content: center;
     display: flex;
     align-items: center;
-
 
     li {
       font-size: 25px;
@@ -93,8 +89,6 @@ main {
     }
   }
 }
-
-
 
 #favorited,
 #result {
@@ -134,7 +128,6 @@ main {
 }
 
 .fa-star {
-
   margin-top: 10px;
   position: absolute;
   cursor: pointer;

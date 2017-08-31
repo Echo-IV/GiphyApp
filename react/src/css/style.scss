@@ -76,11 +76,16 @@ header{
   margin-right: 2px;
 }
 
-.fa-search {
+.fa-search, .fa-star {
   color: $header;
 }
 
+.fa-star {
+  cursor: pointer;
+}
+
 .numberItems {
+  margin-top: 10px;
   color:#fff;
   margin-bottom: 10px;
   text-align: center;

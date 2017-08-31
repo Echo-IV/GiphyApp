@@ -77,20 +77,14 @@
         containerGif.classList.add("gif");
 
         const buttonGif = document.createElement("span");
-        buttonGif.setAttribute("id", "buttonGif");
         buttonGif.classList.add("fa", "fa-star");
-        
-        buttonGif.setAttribute("onclick", "app.favorited.saveGif(this.previousSibling,this)");
 
+        buttonGif.addEventListener("click", () => app.favorited.saveGif(imgGif,buttonGif))
         const imgGif = document.createElement("img");
-        imgGif.setAttribute("id", "imgGif");
         imgGif.setAttribute("src", gif.images.downsized.url);
         imgGif.setAttribute("alt", gif.slug);
         imgGif.setAttribute("width", "200");
         imgGif.setAttribute("height", "200");
-
-
-        imgGif.setAttribute("onmouseover", "showAddFavorite(this)");
 
         result.appendChild(containerGif);
         containerGif.appendChild(imgGif);
@@ -118,6 +112,8 @@
 
   searchIconClean.addEventListener("click", clearInput)
   search.addEventListener("change", handleSubmit())
+  search.addEventListener("keydown", () => showClearInput(search.value))
+
 
   app.render = {
     handleSubmit,

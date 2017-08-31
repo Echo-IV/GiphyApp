@@ -17,18 +17,14 @@
       imgGif.setAttribute("height", "200");
 
       const buttonGif = document.createElement("span");
-      buttonGif.setAttribute("id", "btnGif");
       buttonGif.classList.add("fa", "fa-star")
-
-      buttonGif.setAttribute("onclick", "removeGif(this)");
+      buttonGif.addEventListener("click", () => removeGif(buttonGif));
 
       container.appendChild(containerGif);
       containerGif.appendChild(imgGif);
       containerGif.appendChild(buttonGif);
     })
   };
-
-
 
   renderFavorites = favorites => {
     renderGif(favorites, favoritedContainer);
@@ -45,9 +41,18 @@
   };
 
   removeGif = container => {
+    const itemsGif = JSON.parse(localStorage["favorited"]);
 
-    localStorage.removeItem('favorited');
-    container.classList.add("fa", "fa-star");
+    for(let i = 0; i < itemsGif.length; i++){
+        let gif = itemsGif[i];
+        console.log(gif);
+        console.log(i);
+       itemsGif.splice(gif, 1);
+       break;
+    }
+    const updateGif = JSON.stringify(itemsGif)
+    localStorage.setItem("favorited", updateGif);
+    container.classList.add("fa", "fa-star", "selected");
   };
 
   saveGif = (item, container) => {
