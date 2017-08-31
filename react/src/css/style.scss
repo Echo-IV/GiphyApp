@@ -1,0 +1,87 @@
+@import "./reset.scss";
+$background: #2c3942;
+$header: #ff4747;
+
+body {
+  background-color: $background;
+  font-family: 'Roboto', sans-serif;
+}
+
+header{
+  height: 100px;
+  background-color: $header;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  h1{
+    font-size: 35px;
+    display: flex;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+  }
+
+  button {
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+  }
+
+  input {
+    font-size: 35px;
+    color: $header;
+    width: 500px;
+    height:30px;
+  }
+
+  ul {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    li{
+      font-size: 25px;
+    }
+    a{
+      text-decoration: none;
+      color:#fff;
+
+      &:hover{
+        border-bottom: #fff 1px solid;
+      }
+    }
+  }
+}
+
+.result {
+  display: flex;
+  flex-flow: wrap row;
+  width:900px;
+  margin-left: auto;
+  margin-right: auto;
+
+  img{
+    padding:10px;
+  }
+}
+
+.searchIcon {
+  margin-right: 2px;
+}
+
+.fa-search {
+  color: $header;
+}
+
+.numberItems {
+  color:#fff;
+  margin-bottom: 10px;
+  text-align: center;
+}

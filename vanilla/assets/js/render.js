@@ -1,22 +1,17 @@
 ((app) => {
 
   const search = document.getElementById("search");
-  let query = window.location.search;
   const loader = document.getElementById("loader");
   const searchIconClean = document.getElementById("searchIconClean");
   const searchIcon = document.getElementById("searchIcon");
   const apiKey = "af93130f2dd3408cbbd9729b0ce176f0";
-
   const result = document.getElementById("result");
 
   handleSubmit = () => {
 
-    let location = window.location.search.split("?q=")
-    query = search.value || location[1] || "";
+    let params = new URLSearchParams(window.location.search);
 
-    if (location[1]) {
-      search.value = location[1]
-    }
+    query = search.value || params.get("q") || "";
 
     search.setAttribute("value", query);
 
@@ -24,12 +19,11 @@
       searchIconClean.style.visibility = "visible";
     }
 
-    if (search.value || location[1]) {
+    if (search.value || params.get("q")) {
       showLoader();
     }
 
     callApi(query).then((response) => {
-
       return response.json();
     }).then((responseJson) => {
       renderGif(responseJson, result)
@@ -71,36 +65,37 @@
 
     const numberItems = document.getElementById("numberItems");
     numberItems.innerText = '';
-    let resultsBuffer = '';
 
     while (result.firstChild) {
       result.removeChild(result.firstChild);
     }
 
     if (response && response.data.length > 0) {
-      for (let i = 0; i < response.data.length; i++) {
+      response.data.forEach(gif => {
 
         const containerGif = document.createElement("div");
-        containerGif.setAttribute("class", "gif");
+        containerGif.classList.add("gif");
 
         const buttonGif = document.createElement("span");
-        buttonGif.setAttribute("class", "fa fa-star favoritedBtn");
+        buttonGif.setAttribute("id", "buttonGif");
+        buttonGif.classList.add("fa", "fa-star");
+        
         buttonGif.setAttribute("onclick", "app.favorited.saveGif(this.previousSibling,this)");
 
         const imgGif = document.createElement("img");
         imgGif.setAttribute("id", "imgGif");
-        imgGif.setAttribute("src", response.data[i].images.downsized.url);
-        imgGif.setAttribute("alt", response.data[i].slug);
+        imgGif.setAttribute("src", gif.images.downsized.url);
+        imgGif.setAttribute("alt", gif.slug);
         imgGif.setAttribute("width", "200");
         imgGif.setAttribute("height", "200");
 
+
         imgGif.setAttribute("onmouseover", "showAddFavorite(this)");
 
-
-        resultsBuffer += result.appendChild(containerGif);
-        resultsBuffer += containerGif.appendChild(imgGif);
-        resultsBuffer += containerGif.appendChild(buttonGif);
-      }
+        result.appendChild(containerGif);
+        containerGif.appendChild(imgGif);
+        containerGif.appendChild(buttonGif);
+      })
 
       numberItems.innerText = "Il y a " + response.data.length + " éléments"
 
@@ -120,8 +115,6 @@
   showAddFavorite = (container) => {
     container.nextSibling.style.visibility = "visible";
   };
-
-
 
   searchIconClean.addEventListener("click", clearInput)
   search.addEventListener("change", handleSubmit())

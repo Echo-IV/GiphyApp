@@ -1,14 +1,14 @@
 ((app) => {
 
   const favorited = [];
+  const favoritedContainer = document.getElementById("favorited");
 
   renderGif = (gifs, container) => {
-    let favoritedBuffer = "";
 
     gifs.forEach(gif => {
 
       const containerGif = document.createElement("div");
-      containerGif.setAttribute("class", "gif");
+      containerGif.classList.add("gif");
 
       const imgGif = document.createElement("img");
       imgGif.setAttribute("src", gif.link);
@@ -17,17 +17,21 @@
       imgGif.setAttribute("height", "200");
 
       const buttonGif = document.createElement("span");
-      buttonGif.setAttribute("class", "fa fa-star");
+      buttonGif.setAttribute("id", "btnGif");
+      buttonGif.classList.add("fa", "fa-star")
+
       buttonGif.setAttribute("onclick", "removeGif(this)");
 
-      favoritedBuffer += container.appendChild(containerGif);
-      favoritedBuffer += containerGif.appendChild(imgGif);
-      favoritedBuffer += containerGif.appendChild(buttonGif);
+      container.appendChild(containerGif);
+      containerGif.appendChild(imgGif);
+      containerGif.appendChild(buttonGif);
     })
   };
 
+
+
   renderFavorites = favorites => {
-    renderGif(favorites, document.getElementById("favorited"));
+    renderGif(favorites, favoritedContainer);
   };
 
   getFavoritesFromStorage = () => {
@@ -41,8 +45,9 @@
   };
 
   removeGif = container => {
+
     localStorage.removeItem('favorited');
-    container.setAttribute("class", "fa fa-star");
+    container.classList.add("fa", "fa-star");
   };
 
   saveGif = (item, container) => {

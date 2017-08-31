@@ -19,13 +19,13 @@ header {
     color: #fff;
     align-items: center;
     justify-content: center;
-    grid-column: 1;
+
   }
 
   #searchBar {
     display: flex;
     align-items: center;
-    grid-column: 2;
+
 
     #search {
       font-size: 35px;
@@ -45,7 +45,7 @@ header {
   }
 
   a {
-    cursor: pointer;
+
     text-decoration: none;
     color: #fff;
 
@@ -58,7 +58,7 @@ header {
     justify-content: center;
     display: flex;
     align-items: center;
-    grid-column: 3;
+
 
     li {
       font-size: 25px;
@@ -94,15 +94,7 @@ main {
   }
 }
 
-footer {
-  #items {
-    margin-top: 20px;
-    color: #fff;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-  }
-}
+
 
 #favorited,
 #result {
@@ -126,11 +118,6 @@ footer {
   }
 }
 
-.favoritedBtn {
-  border: none;
-  background-color: transparent;
-}
-
 .show {
   display: block;
 }
@@ -147,7 +134,7 @@ footer {
 }
 
 .fa-star {
-  visibility: hidden;
+
   margin-top: 10px;
   position: absolute;
   cursor: pointer;
@@ -164,9 +151,8 @@ footer {
 
 
 #numberItems {
-  display: flex;
-  margin-top: 10px;
+
   margin-bottom: 10px;
   color: #fff;
-  justify-content: center;
+  text-align: center;
 }

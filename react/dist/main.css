@@ -1,32 +1,14 @@
 header {
-  display: grid;
-  height: 100px;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 100px; }
-  header h1 {
-    display: flex;
-    align-items: center;
-    grid-column: 2 / 4; }
-  header #searchBar {
-    display: flex;
-    align-items: center;
-    grid-column: 4 / 7; }
-  header .loader {
-    visibility: hidden;
-    border: 16px solid #f3f3f3;
-    /* Light grey */
-    border-top: 16px solid #3498db;
-    /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite; }
+  background-color: #ff4747; }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg); }
-  100% {
-    transform: rotate(360deg); } }
+.result {
+  display: flex;
+  flex-flow: wrap row;
+  width: 900px;
+  margin-left: auto;
+  margin-right: auto; }
+  .result img {
+    padding: 10px; }
 
-nav a {
-  cursor: pointer; }
+.numberItems {
+  text-align: center; }
