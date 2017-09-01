@@ -78,10 +78,10 @@ class Gif extends Component {
     const favorited = [];
     const id = Date.now();
     parseInt(localStorage['id'], id);
-    const link = container.target.src;
+    const link = container.target.previousSibling.src;
     favorited.push({link, id})
     localStorage.setItem("favorited", JSON.stringify(favorited));
-    
+
   }
 
   getFavorited() {
