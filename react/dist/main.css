@@ -84,13 +84,13 @@ header {
       header ul a:hover {
         border-bottom: #fff 1px solid; }
 
-.result {
+.result, .favorited {
   display: flex;
   flex-flow: wrap row;
   width: 900px;
   margin-left: auto;
   margin-right: auto; }
-  .result img {
+  .result img, .favorited img {
     padding: 10px; }
 
 .searchIcon {
@@ -100,14 +100,7 @@ header {
   color: #ff4747; }
 
 .fa-star {
-  margin-top: 10px;
-  position: absolute;
-  cursor: pointer;
-  width: 5px;
-  height: 5px;
-  top: 0;
-  right: 0;
-  padding-right: 15px; }
+  cursor: pointer; }
 
 .numberItems {
   margin-top: 10px;

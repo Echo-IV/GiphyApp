@@ -12,6 +12,7 @@ const config = {
         contentBase: './src',
         port: 3000
     },
+    devtool:"cheap-module-eval-source-map",
     module: {
         loaders: [
             {
