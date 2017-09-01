@@ -17,14 +17,26 @@ class RenderFavorited extends Component {
 
   }
 
+  removeGifToFavorite(e){
+    if(e.target.classList.contains("selected")){
+      e.target.classList.remove("selected")
+    }else{
+        e.target.classList.add("selected");
+    }
+
+
+    this.removeGif(e)
+  }
+
   render(){
 
     const favorited = localStorage.getItem("favorited");
 
     const favoritedGifs = JSON.parse(favorited).map((gif) =>
 
-      <div key={gif.id}>
-        <img onClick={(e) => this.removeGif(e)} src={gif.link} alt={`favoris ${gif.id}`} width="200" height="200"/>
+      <div className="gifContainer" key={gif.id}>
+        <img src={gif.link} alt={`favoris ${gif.id}`} width="200" height="200"/>
+          <span onClick={(e) => this.removeGifToFavorite(e)} className="fa fa-star"></span>
       </div>
     )
 

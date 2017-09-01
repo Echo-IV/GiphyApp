@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 class RenderGif extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      isSelected: false
-    }
+
   }
 
   addGifToFavorite(e){
@@ -14,8 +12,8 @@ class RenderGif extends Component {
     }else{
         e.target.classList.add("selected");
     }
-  
-    this.setState({isSelected :!this.state.isSelected});
+
+
     this.props.saveGif(e);
   }
 
