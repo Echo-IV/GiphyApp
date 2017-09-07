@@ -63,6 +63,9 @@ header {
   header form {
     display: flex;
     align-items: center; }
+    header form span {
+      cursor: pointer;
+      margin-left: -20px; }
   header button {
     cursor: pointer;
     width: 36px;
@@ -80,6 +83,7 @@ header {
       font-size: 25px; }
     header ul a {
       text-decoration: none;
+      cursor: pointer;
       color: #fff; }
       header ul a:hover {
         border-bottom: #fff 1px solid; }
@@ -92,6 +96,10 @@ header {
   margin-right: auto; }
   .result img, .favorited img {
     padding: 10px; }
+  .result span, .favorited span {
+    position: absolute;
+    right: 14px;
+    top: 14px; }
 
 .searchIcon {
   margin-right: 2px; }
@@ -99,11 +107,40 @@ header {
 .fa-search, .fa-star {
   color: #ff4747; }
 
+.selected {
+  color: #000; }
+
 .fa-star {
   cursor: pointer; }
+
+.hide {
+  visibility: hidden; }
 
 .numberItems {
   margin-top: 10px;
   color: #fff;
   margin-bottom: 10px;
   text-align: center; }
+
+.response {
+  display: flex;
+  justify-content: center; }
+
+.gifContainer {
+  position: relative; }
+
+.loader {
+  margin-top: 10px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 40px;
+  height: 40px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }

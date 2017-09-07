@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class RenderFavorited extends Component {
-  constructor(props){
-    super(props);
-  }
+const RenderFavorited = () => {
 
-  removeGif(e) {
+  const removeGif = (e) => {
     const itemsGif = JSON.parse(localStorage["favorited"]);
 
     itemsGif.forEach(gif => {
@@ -17,37 +14,30 @@ class RenderFavorited extends Component {
 
   }
 
-  removeGifToFavorite(e){
-    if(e.target.classList.contains("selected")){
+  const removeGifToFavorite = (e) => {
+    if (e.target.classList.contains("selected")) {
       e.target.classList.remove("selected")
-    }else{
-        e.target.classList.add("selected");
+    } else {
+      e.target.classList.add("selected");
     }
-
 
     this.removeGif(e)
   }
 
-  render(){
+  const favorited = localStorage.getItem("favorited");
 
-    const favorited = localStorage.getItem("favorited");
+  const favoritedGifs = JSON.parse(favorited).map((gif) => <div className="gifContainer" key={gif.id}>
+    <img src={gif.link} alt={`favoris ${gif.id}`} width="200" height="200"/>
+    <span onClick={(e) => this.removeGifToFavorite(e)} className="fa fa-star"></span>
+  </div>)
 
-    const favoritedGifs = JSON.parse(favorited).map((gif) =>
-
-      <div className="gifContainer" key={gif.id}>
-        <img src={gif.link} alt={`favoris ${gif.id}`} width="200" height="200"/>
-          <span onClick={(e) => this.removeGifToFavorite(e)} className="fa fa-star"></span>
+  return (
+    <div>
+      <div className="favorited">
+        {favoritedGifs}
       </div>
-    )
-
-    return (
-      <div>
-        <div className="favorited">
-          {favoritedGifs}
-        </div>
-      </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default RenderFavorited;

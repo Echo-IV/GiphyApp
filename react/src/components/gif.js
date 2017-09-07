@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 import RenderGif from './RenderGif';
 import Favorited from './favorited';
 import gifService from '../services/gifService';
+import { getGif } from '../actions/actions';
 
 class Gif extends Component {
   constructor(props) {
@@ -11,14 +13,13 @@ class Gif extends Component {
       gifs: [],
       visibleLoader: false,
       favorited: [],
-      isFavorited: false,
       hideClearInput: true
     }
   }
 
-
-
   componentWillMount(){
+
+
     if(window.location.search != ''){
       let params = new URLSearchParams(window.location.search);
       const query = params.get("q");
@@ -47,7 +48,13 @@ class Gif extends Component {
 
   RenderGif(query) {
 
-    this.setState({query})
+    console.log(this.props);
+
+    // this.props.onGifSubmit(query);
+    // this.props.onSelectFavorited(true);
+
+
+    //this.setState({query})
 
     const apiKey = "af93130f2dd3408cbbd9729b0ce176f0";
 
@@ -84,16 +91,11 @@ class Gif extends Component {
 
   }
 
-  getFavorited() {
-    this.setState({isFavorited: true});
-  }
+
 
   render() {
     return (
       <div>
-        {this.state.isFavorited
-          ? <Favorited/>
-          : <div>
             <header>
               <h1>Giphy App !</h1>
               <form onSubmit={(e) => this.handleSubmit(e)}>
@@ -101,11 +103,11 @@ class Gif extends Component {
                   <button className="fa fa-search"></button>
                 </div>
                 <input ref={(input) => {this.textInput = input}} name="q" type="text" onChange={(e) => this.handleChange(e)} value={this.state.query} onKeyDown={(e) => this.handleShowClearInput(e)}/>
-                <span onClick={() => this.handleClearInput()} className={"fa fa-times searchIconClean" + (this.state.hideClearInput ? "hide" : "")}></span>
+                <span onClick={() => this.handleClearInput()} className={"fa fa-times searchIconClean " + (this.state.hideClearInput ? "hide" : "")}></span>
               </form>
               <ul>
                 <li>
-                  <a onClick={() => this.getFavorited()}>Favoris</a>
+                  <Link to="/favorited">Favoris</Link>
                 </li>
               </ul>
             </header>
@@ -128,7 +130,6 @@ class Gif extends Component {
                 <div></div>
               </footer>
             </div>
-          </div>}
       </div>
     )
   }

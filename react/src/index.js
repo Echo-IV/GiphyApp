@@ -1,6 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import gifApp from './reducers/';
 import App from './components/App.js';
+import Favorited from './components/favorited';
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+const store = createStore((gifApp),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
+ReactDOM.render(
+  <Provider store={store}>
+    <Router>
+      <Switch>>
+        <Route exact path='/' component={App} />
+        <Route path="/favorited" component={Favorited} />
+      </Switch>
+    </Router>
+  </Provider>,
+  document.getElementById('app')
+);

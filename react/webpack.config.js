@@ -10,7 +10,8 @@ const config = {
     devServer: {
         inline: true,
         contentBase: './src',
-        port: 3000
+        port: 3000,
+        historyApiFallback: true
     },
     devtool:"cheap-module-eval-source-map",
     module: {

@@ -1,23 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class RenderGif extends Component {
-  constructor(props){
-    super(props);
+  const RenderGif = () => {
 
-  }
-
-  addGifToFavorite(e){
-    if(e.target.classList.contains("selected")){
-      e.target.classList.remove("selected")
-    }else{
-        e.target.classList.add("selected");
+    addGifToFavorite = (e) => {
+      if(e.target.classList.contains("selected")){
+        e.target.classList.remove("selected")
+      }else{
+          e.target.classList.add("selected");
+      }
+      this.props.saveGif(e);
     }
 
-
-    this.props.saveGif(e);
-  }
-
-  render(){
     const gifs = this.props.gifs.map((gif) =>
       <div className="gifContainer" key={gif.id}>
         <img src={gif.images.downsized.url} alt={gif.slug} width="200" height="200"/>
@@ -36,6 +29,5 @@ class RenderGif extends Component {
       </div>
     )
   }
-}
 
 export default RenderGif;
