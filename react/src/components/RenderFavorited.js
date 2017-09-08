@@ -21,14 +21,14 @@ const RenderFavorited = () => {
       e.target.classList.add("selected");
     }
 
-    this.removeGif(e)
+    removeGif(e)
   }
 
   const favorited = localStorage.getItem("favorited");
 
   const favoritedGifs = JSON.parse(favorited).map((gif) => <div className="gifContainer" key={gif.id}>
     <img src={gif.link} alt={`favoris ${gif.id}`} width="200" height="200"/>
-    <span onClick={(e) => this.removeGifToFavorite(e)} className="fa fa-star"></span>
+    <span onClick={(e) => removeGifToFavorite(e)} className="fa fa-star"></span>
   </div>)
 
   return (

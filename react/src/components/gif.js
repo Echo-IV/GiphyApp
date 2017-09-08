@@ -1,138 +1,117 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import RenderGif from './RenderGif';
-import Favorited from './favorited';
-import gifService from '../services/gifService';
-import { getGif } from '../actions/actions';
+import { searchGif, getGif, fetchGif, hideClearInput, showClearInput } from '../actions/actions';
+
+const apiKey = "af93130f2dd3408cbbd9729b0ce176f0";
+const favorited = [];
 
 class Gif extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      query: '',
-      gifs: [],
-      visibleLoader: false,
-      favorited: [],
-      hideClearInput: true
-    }
-  }
 
-  componentWillMount(){
+  componentWillMount() {
 
+    if (window.location.search != '') {
 
-    if(window.location.search != ''){
       let params = new URLSearchParams(window.location.search);
       const query = params.get("q");
-      this.RenderGif(query);
+      this.props.fetchGif(apiKey, query);
     }
   }
 
   handleShowClearInput(e) {
-    console.log(e.target.value)
-    if(e.target.value.length > 1){
-      this.setState({hideClearInput:false})
-    }else{
-      this.setState({hideClearInput:true})
+
+    if (e.target.value.length > 1) {
+      this.props.showClearInput(true)
+    } else {
+        this.props.showClearInput(false)
     }
   }
 
-  handleClearInput(){
-     this.textInput.value = "";
+  handleClearInput() {
+    this.textInput.value = '';
+    this.props.showClearInput(false);
   }
 
-  toggleLoader() {
-    this.setState({
-      visibleLoader: !this.state.visibleLoader
-    });
-  }
-
-  RenderGif(query) {
-
-    console.log(this.props);
-
-    // this.props.onGifSubmit(query);
-    // this.props.onSelectFavorited(true);
-
-
-    //this.setState({query})
-
-    const apiKey = "af93130f2dd3408cbbd9729b0ce176f0";
-
-    this.toggleLoader();
-
-    gifService.getGif(apiKey, query).then((response) => {
-      return response.json();
-    }).then((responseJson) => {
-      this.setState({gifs: responseJson.data});
-    }).catch((error) => {
-      console.log(error);
-    }).then(() => {
-      this.toggleLoader();
-    })
-  }
-
-  handleSubmit(event) {
-
-    this.RenderGif(this.state.query)
-  }
-
-  handleChange(event) {
-    this.setState({query: event.target.value});
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.searchGif(this.textInput.value);
+    this.props.fetchGif(apiKey, this.textInput.value);
   }
 
   saveGif(container) {
 
-    const favorited = [];
     const id = Date.now();
     parseInt(localStorage['id'], id);
     const link = container.target.previousSibling.src;
+
     favorited.push({link, id})
+    console.log(favorited);
     localStorage.setItem("favorited", JSON.stringify(favorited));
 
   }
 
-
-
   render() {
     return (
       <div>
-            <header>
-              <h1>Giphy App !</h1>
-              <form onSubmit={(e) => this.handleSubmit(e)}>
-                <div className="searchIcon">
-                  <button className="fa fa-search"></button>
-                </div>
-                <input ref={(input) => {this.textInput = input}} name="q" type="text" onChange={(e) => this.handleChange(e)} value={this.state.query} onKeyDown={(e) => this.handleShowClearInput(e)}/>
-                <span onClick={() => this.handleClearInput()} className={"fa fa-times searchIconClean " + (this.state.hideClearInput ? "hide" : "")}></span>
-              </form>
-              <ul>
-                <li>
-                  <Link to="/favorited">Favoris</Link>
-                </li>
-              </ul>
-            </header>
+        <header>
+          <h1>Giphy App !</h1>
+          <form onSubmit={(e) => this.handleSubmit(e)}>
+            <div className="searchIcon">
+              <button className="fa fa-search"></button>
+            </div>
+            <input ref={(input) => {
+              this.textInput = input
+            }} name="q" type="text" onKeyDown={(e) => this.handleShowClearInput(e)}/>
+            {this.props.isHideClearInput ?
+                <span onClick={() => this.handleClearInput()} className={"fa fa-times searchIconClean"}></span>
+            : null}
+          </form>
+          <ul>
+            <li>
+              <Link to="/favorited">Favoris</Link>
+            </li>
+          </ul>
+        </header>
+
+        <div>
+
+          <main>
+            <div className="response">
+              {this.props.visibleLoader
+                ? <div className="loader"></div>
+                : null}
+            </div>
 
             <div>
-
-              <main>
-                <div className="response">
-                  {this.state.visibleLoader ?
-                  <div className="loader"></div> :
-                  null }
-                </div>
-
-                <div>
-                  <RenderGif gifs={this.state.gifs} saveGif={this.saveGif}/>
-                </div>
-              </main>
-
-              <footer>
-                <div></div>
-              </footer>
+              <RenderGif gifs={this.props.gifs} saveGif={this.saveGif}/>
             </div>
+          </main>
+
+          <footer>
+            <div></div>
+          </footer>
+        </div>
       </div>
     )
   }
 }
 
-export default Gif;
+const mapStateToProps = ({ reducersGif }) => {
+
+  return {
+    gifs: reducersGif.gifs,
+    visibleLoader: reducersGif.visibleLoader,
+    favorited: reducersGif.favorited,
+    isHideClearInput: reducersGif.isHideClearInput,
+    query: reducersGif.query
+  }
+}
+
+const mapDispatchToProps = {
+  searchGif,
+  fetchGif,
+  showClearInput
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Gif);

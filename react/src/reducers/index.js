@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import gif from './gif';
+import reducersGif from './reducersGif';
 
-const gifApp = combineReducers({gif});
+const gifApp = combineReducers({reducersGif});
 
 export default gifApp;

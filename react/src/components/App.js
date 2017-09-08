@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import { getGif, getFavorited } from '../actions/actions';
-import Gif from './gif';
+import Gif from './Gif';
 
 class App extends Component {
   render() {
@@ -13,21 +11,4 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    query: state.query
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onGifSubmit: query => {
-      dispatch(getGif(query))
-    },
-    onSelectFavorited: favorited => {
-      dispatch(getFavorited(favorited))
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Gif);
+export default App;
