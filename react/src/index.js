@@ -1,26 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
-import gifApp from './reducers/';
+import { createStore, applyMiddleware, compose } from 'redux';
+import rootReducer from './reducers';
 import App from './components/App.js';
-import Favorited from './components/Favorited';
 
-const store = createStore((gifApp),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(thunk)
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const savedFavorited = JSON.parse(localStorage.getItem("favorited")) || undefined;
+
+const store = createStore(
+  rootReducer,
+  {
+    favorites: savedFavorited
+  },
+  composeEnhancers(
+    applyMiddleware(thunk)
+  ),
 );
+
+let previousFavorites = store.getState().favorites;
+const handleChangeFavorited = () => {
+  const { favorites } = store.getState();
+
+  if (previousFavorites !== favorites) {
+    localStorage.setItem("favorited", JSON.stringify(favorites));
+    previousFavorites = favorites;
+  }
+}
+
+let subscribe = store.subscribe(handleChangeFavorited)
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <Switch>>
-        <Route exact path='/' component={App} />
-        <Route path="/favorited" component={Favorited} />
-      </Switch>
-    </Router>
+    <App />
   </Provider>,
   document.getElementById('app')
 );
