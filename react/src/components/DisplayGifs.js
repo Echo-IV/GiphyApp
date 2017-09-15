@@ -6,7 +6,7 @@ class DisplayGifs extends Component {
   render() {
 
     const { favorites, gifs, remove, add } = this.props;
-    
+
     return (
       <div className="result">
         {gifs.map((gif) => (

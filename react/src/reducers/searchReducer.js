@@ -1,8 +1,7 @@
 import {
   SEARCH_GIFS,
   SEARCH_GIFS_SUCCESS,
-  SEARCH_GIFS_ERROR,
-  LOADING_DATA
+  SEARCH_GIFS_ERROR
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -23,8 +22,7 @@ const gif = (state = initialState, action) => {
       };
     case SEARCH_GIFS_ERROR:
       return {
-        ...state,
-        visibleLoader: false
+        ...state
       };
     default:
       return state

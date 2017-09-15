@@ -6,7 +6,6 @@ import {
 
 const GIPHY_API_KEY = 'af93130f2dd3408cbbd9729b0ce176f0';
 
-
 export const searchGifs = query => {
   return {
     type: SEARCH_GIFS,
@@ -28,7 +27,7 @@ export const searchGifsError = error => {
   }
 }
 
-export function fetchGif(query,limit = 25) {
+export function fetchGif(query, limit = 25) {
   return dispatch => {
     dispatch(searchGifs(query))
     return fetch(`http://api.giphy.com/v1/gifs/search?q=${query}&api_key=${GIPHY_API_KEY}&limit=${limit}`, {
@@ -41,7 +40,8 @@ export function fetchGif(query,limit = 25) {
       .then(response => response.json())
       .then(
       json => {
-        dispatch(searchGifsSuccess(json.data))},
+        dispatch(searchGifsSuccess(json.data))
+      },
       error => dispatch(searchGifsError(error))
       );
   }

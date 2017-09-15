@@ -8,17 +8,19 @@ class Form extends Component {
   }
 
   componentDidMount() {
-   
+
     const { history, query } = this.props;
-    if (history.location.search !== '') {
+    if (history.location.search != "") {
       let params = new URLSearchParams(history.location.search);
       const query = params.get("q");
       this.props.fetchGif(query);
     }
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState({ searchValue: nextProps.query });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.query !== null) {
+      this.setState({ searchValue: nextProps.query });
+    }
   }
 
   handleClearInput() {
@@ -28,9 +30,8 @@ class Form extends Component {
   handleSubmit = (e) => {
 
     e.preventDefault();
-    const { searchValue } = this.state;
-    this.props.fetchGif(searchValue);
-    this.props.history.push(`/?q=${searchValue}`)
+    this.props.fetchGif(this.state.searchValue);
+    this.props.history.push(`/?q=${this.state.searchValue}`)
   };
 
   handleInputChange = (evt) => {
@@ -39,8 +40,6 @@ class Form extends Component {
 
   render() {
     const { searchValue } = this.state;
-    const { history } = this.props;
-
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -51,15 +50,15 @@ class Form extends Component {
           ref={(input) => this.textInput = input}
           name="q"
           type="text"
-          value={searchValue}
+          value={this.state.searchValue}
           onChange={this.handleInputChange}
         />
-        {/* {searchValue.length > 0 ?
+        {searchValue && searchValue.length > 0 ?
           <span
             className="button-clear fa fa-times"
             onClick={() => this.handleClearInput()}
           />
-          : null} */}
+          : null}
       </form>
     )
   }
