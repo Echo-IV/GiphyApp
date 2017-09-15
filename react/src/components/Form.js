@@ -8,13 +8,17 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    const { history } = this.props;
+   
+    const { history, query } = this.props;
     if (history.location.search !== '') {
       let params = new URLSearchParams(history.location.search);
       const query = params.get("q");
       this.props.fetchGif(query);
-      this.setState({ searchValue: query });
     }
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({ searchValue: nextProps.query });
   }
 
   handleClearInput() {
@@ -37,6 +41,7 @@ class Form extends Component {
     const { searchValue } = this.state;
     const { history } = this.props;
 
+
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="searchIcon">
@@ -49,12 +54,12 @@ class Form extends Component {
           value={searchValue}
           onChange={this.handleInputChange}
         />
-        {searchValue.length > 0 ?
+        {/* {searchValue.length > 0 ?
           <span
             className="button-clear fa fa-times"
             onClick={() => this.handleClearInput()}
           />
-          : null}
+          : null} */}
       </form>
     )
   }

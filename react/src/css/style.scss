@@ -59,7 +59,6 @@ header{
     justify-content: center;
     align-items: center;
 
-
     li{
       font-size: 25px;
     }
@@ -79,10 +78,31 @@ header{
   display: flex;
   flex-flow: wrap row;
 
-
   img{
     padding:10px;
   }
+
+  .loaderImage{
+    position: absolute;
+    top:40%;
+    left:45%;
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #3498db;
+      width: 40px;
+      height: 40px;
+      -webkit-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+  
+      100% {
+        transform: rotate(360deg);
+      }
+    }
 
   span{
     cursor: pointer;
@@ -122,6 +142,10 @@ header{
   .response {
     display: flex;
     justify-content: center;
+    position: absolute;
+    bottom:10px;
+    left:0;
+    right:0;
   }
 
   .gifContainer {
@@ -139,6 +163,20 @@ header{
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
   }
+
+  .loaderBackground {
+    background-size: contain;
+    margin-top: 10px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 40px;
+    height: 40px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+
+
   @keyframes spin {
     0% {
       transform: rotate(0deg);

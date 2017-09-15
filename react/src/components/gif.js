@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 
 class Gif extends Component {
 
+  state = {
+    isImageLoading: false
+  }
+
   handleFavoriteButtonClick = (gif, favorites) => {
 
     const match = favorites.filter((favorite) => favorite.id === gif.id);
@@ -13,16 +17,34 @@ class Gif extends Component {
     }
   }
 
+  handleLoadingImage = () => {
+
+    this.setState({ isImageLoading: true })
+  }
+
   render() {
 
-    const { data, favorites } = this.props;
+    const { data, favorites, loading } = this.props;
 
     const match = favorites.filter((favorite) => favorite.id === data.id);
 
     return (
-      <div className="gifContainer" key={data.id}>
-        <img src={data.images.downsized.url} alt={`favoris ${data.id}`} />
-        <span onClick={() => this.handleFavoriteButtonClick(data, favorites)} className={"fa fa-star " + (match.length ? "selected" : '')} />
+      <div>
+
+        <div className="gifContainer" key={data.id}>
+
+          {this.state.isImageLoading ? null : <div className="responseImage">
+            <div className="loaderImage"></div>
+          </div>}
+          <img onLoad={this.handleLoadingImage} src={data.images.downsized.url} alt={`favoris ${data.id}`} width="200" height="200" />
+
+          {this.state.isImageLoading ? <span
+            onClick={() => this.handleFavoriteButtonClick(data, favorites)}
+            className={"fa fa-star " + (match.length ? "selected" : '')}
+          /> : null}
+
+        </div>
+
       </div>
     )
   }

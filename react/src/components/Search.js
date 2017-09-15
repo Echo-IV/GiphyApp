@@ -3,26 +3,64 @@ import DisplayGifs from './DisplayGifs';
 import Header from './Header';
 
 class Search extends Component {
+
+  state = {
+    limit: 20
+  }
+
+  componentDidMount() {
+    window.addEventListener("scroll", (e) => this.handleScroll(e));
+
+    window.addEventListener('popstate', (e) => this.handleGoBack(e));
+     
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener("scroll", (e) => this.handleScroll(e));
+  }
+
+  handleGoBack = () => {
+  
+      let params = new URLSearchParams(location.search);
+      const query = params.get("q");
+      const offset = 25;
+      this.props.fetchGif(query, offset)  
+   
+  }
+
+  handleScroll = (e) => {
+   
+    let scrollPosition = e.target.body.scrollTop;
+    let bodyHeight = document.body.offsetHeight;
+ 
+    if(scrollPosition + 1000 > bodyHeight){
+  
+      //this.setState({limit: this.state.limit + 20})
+      const offset = this.props.gifs.length + 20;
+      this.props.fetchGif(this.props.query, offset);
+    }
+  }
+
   render() {
+
+    const { location, gifs } = this.props;
+
     return (
       <div>
         <Header history={this.props.history} />
-        {this.props.visibleLoader ?
-          <div className="response">
-            <div className="loader"></div>
-          </div>
-          
-          : <div>
-            <DisplayGifs
-              add={this.props.addToFavorites}
-              remove={this.props.removeFromFavorites}
-              favorites={this.props.favorites}
-              gifs={this.props.gifs} />
-          </div>
-        }
+      
+        <div>
+          <DisplayGifs
+            add={this.props.addToFavorites}
+            remove={this.props.removeFromFavorites}
+            favorites={this.props.favorites}
+            gifs={this.props.gifs} />
+        </div>
+        
         {this.props.history.location.search ?
           <p className="numberItems">Il y a {this.props.gifs.length} éléments</p>
           : null}
+
       </div>
     )
   }

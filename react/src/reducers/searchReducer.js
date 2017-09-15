@@ -1,21 +1,25 @@
 import {
+  SEARCH_GIFS,
   SEARCH_GIFS_SUCCESS,
   SEARCH_GIFS_ERROR,
+  LOADING_DATA
 } from '../actions/actionTypes';
 
 const initialState = {
-  gifs: [],
-  visibleLoader: false,
+  gifs: []
 };
 
 const gif = (state = initialState, action) => {
-
   switch (action.type) {
+    case SEARCH_GIFS:
+      return {
+        ...state,
+        query: action.query
+      };
     case SEARCH_GIFS_SUCCESS:
       return {
         ...state,
-        gifs: action.gifs,
-        visibleLoader: false
+        gifs: action.gifs
       };
     case SEARCH_GIFS_ERROR:
       return {
